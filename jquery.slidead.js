@@ -7,8 +7,6 @@
 		* https://github.com/carhartl/jquery-cookie
 
 */
-
-
 (function($){
 	$.fn.slideAd = function(args) {
 
