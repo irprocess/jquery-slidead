@@ -6,36 +6,6 @@
 		* jQuery Cookie Plugin v1.3.1
 		* https://github.com/carhartl/jquery-cookie
 
-
-	ES. UTILIZZO ------------------------------------------
-
-		// vedi defaults
-		$('#testbanner').slideAd({
-			autoClose:		10,
-			dismiss:		2,
-			autoOpen:		true,
-			openers:		'#apri',
-			onClose:		function(){
-				alert("Closed!");
-			}
-		});
-
-		------
-
-		<div id="testbanner">
-			TEST BANNER<br><br>
-			<a href="" class="slideAd-close">CLOSE</a> -
-			<a href="http://www.google.it" class="slideAd-dismiss" target="_blank">DONE</a>
-		</div>
-		<button id="apri">APRI</button>
-
-		------
-
-		$('#testbanner').slideAd('open');
-		$('#testbanner').slideAd('close');
-		$('#testbanner').slideAd('dismiss'); 	// imposta il cookie per non far riaprire l'ad e chiude
-		$('#testbanner').slideAd('reset'); 		// elimina il cookie
-
 */
 
 
@@ -44,10 +14,10 @@
 
 		// settings di default
 		var defaults = {
-			speed: 				'slow',					// velocità  animazione
+			speed: 				'slow',					// velocitï¿½  animazione
 			autoOpen:			true,					// se true si apre all'apertura della pagina
 			autoClose:			0,						// secondi prima di chiusura automatica (0 = disabilita);
-			dismiss:			0,						// giorni durata del cookie di dismiss (0 = sessione, -1 = disabilita) - usa un cookie per non far più visualizzare l'annuncio (necessita di plugin jQuery Cookie)
+			dismiss:			0,						// giorni durata del cookie di dismiss (0 = sessione, -1 = disabilita) - usa un cookie per non far piï¿½ visualizzare l'annuncio (necessita di plugin jQuery Cookie)
 			closers:			'.slideAd-close',		// selettore degli elementi che cliccati chiudono l'ad
 			openers:			'.slideAd-open',		// selettore degli elementi che cliccati aprono l'ad
 			dismissers:			'.slideAd-dismiss',		// selettore dei link che cliccati dismettono l'ad (che settano il cookie prima di andare al link)
@@ -79,14 +49,14 @@
 		sad.css('position','relative');
 		sad.css('height','auto');
 
-		if (typeof(args)!="object") { // l'argomento non è un oggetto, suppongo sia un azione
+		if (typeof(args)!="object") { // l'argomento non ï¿½ un oggetto, suppongo sia un azione
 			opts=sad.data('opts');
 			console.log(opts);
 			if (args=='open') apri();
 			if (args=='close') chiudi();
 			if (args=='dismiss') {setCookie();chiudi();}
 			if (args=='reset') {deleteCookie();}
-		} else if (typeof(args)=="object"){ // l'argomento è un oggetto contenente i settings
+		} else if (typeof(args)=="object"){ // l'argomento ï¿½ un oggetto contenente i settings
 			opts = $.extend(defaults, args);
 			sad.data('opts', opts);
 		} else if (!args) {
