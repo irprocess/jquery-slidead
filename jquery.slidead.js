@@ -14,15 +14,15 @@
 
 		// settings di default
 		var defaults = {
-			speed: 				'slow',					// velocit�  animazione
-			autoOpen:			true,					// se true si apre all'apertura della pagina
-			autoClose:			0,						// secondi prima di chiusura automatica (0 = disabilita);
-			dismiss:			0,						// giorni durata del cookie di dismiss (0 = sessione, -1 = disabilita) - usa un cookie per non far pi� visualizzare l'annuncio (necessita di plugin jQuery Cookie)
-			closers:			'.slideAd-close',		// selettore degli elementi che cliccati chiudono l'ad
-			openers:			'.slideAd-open',		// selettore degli elementi che cliccati aprono l'ad
-			dismissers:			'.slideAd-dismiss',		// selettore dei link che cliccati dismettono l'ad (che settano il cookie prima di andare al link)
-			onOpen:				function(){},			// funzione da eseguire su show
-			onClose:			function(){}			// funzione da eseguire su hide
+			speed: 				'slow',				// animation speed
+			autoOpen:			true,				// true: opens when page opens
+			autoClose:			0,					// seconds to automatic close (0 = disable);
+			dismiss:			0,					// dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
+			closers:			'.slideAd-close',	// selector for elements triggering close ad operation
+			openers:			'.slideAd-open',	// selector for elements triggering open ad operation
+			dismissers:			'.slideAd-dismiss',	// selector for elements triggering close and dismiss ad operation (es. destination campaign links)
+			onOpen:				function(){},		// function executed after open
+			onClose:			function(){}		// function executed after close
 		};
 
 		// utilities
@@ -49,74 +49,74 @@
 		sad.css('position','relative');
 		sad.css('height','auto');
 
-		if (typeof(args)!="object") { // l'argomento non � un oggetto, suppongo sia un azione
+		if (typeof(args)!="object") { // not an object (assumed as operation)
 			opts=sad.data('opts');
 			console.log(opts);
-			if (args=='open') apri();
-			if (args=='close') chiudi();
-			if (args=='dismiss') {setCookie();chiudi();}
+			if (args=='open') openAd();
+			if (args=='close') closeAd();
+			if (args=='dismiss') {setCookie();closeAd();}
 			if (args=='reset') {deleteCookie();}
-		} else if (typeof(args)=="object"){ // l'argomento � un oggetto contenente i settings
+		} else if (typeof(args)=="object"){ // args is object with settings
 			opts = $.extend(defaults, args);
 			sad.data('opts', opts);
 		} else if (!args) {
 			opts=defaults;
 		}
 
-		// impostazioni cookie
+		// cookie settings
 		var cookieName='_sad'+utils.encode(window.location.pathname).substring(0,10).toLowerCase()+'_'+sad.attr('id');
 		var cookie=$.cookie?$.cookie(cookieName):'';
 		var cookieVal=(opts.dismiss>0?"sad.d#"+opts.dismiss:"sad.s#0");
 		
-		// apro il banner
-		if (((opts.dismiss>-1&&cookie!=cookieVal)||!opts.dismiss)&&opts.autoOpen) apri();
+		// open the ad 
+		if (((opts.dismiss>-1&&cookie!=cookieVal)||!opts.dismiss)&&opts.autoOpen) openAd();
 
-		// chiusura automatica
-		if (opts.autoClose) setTimeout(function(){chiudi();},(opts.autoClose*1000));
+		// automatic close
+		if (opts.autoClose) setTimeout(function(){closeAd();},(opts.autoClose*1000));
 
-		// binding tasti close
+		// binding close links
 		if (opts.closers) $(opts.closers).on('click', function(e){
 			e.preventDefault();
 			if (opts.dismiss>-1) setCookie();
-			chiudi();
+			closeAd();
 		});
 
-		// binding tasti open
+		// binding open links
 		if (opts.openers) $(opts.openers).on('click', function(e){
 			e.preventDefault();
-			apri();
+			openAd();
 		});
 
-		// binding link che considerano il banner "usato"
+		// binding dismiss links
 		if (opts.dismissers) $(opts.dismissers).on('click', function(e){
 			e.preventDefault();
 			if (opts.dismiss>-1) setCookie();
-			chiudi();
+			closeAd();
 			if ($(this).attr('href')!=""){
 				window.open($(this).attr('href'), $(this).attr('target'));
 			}
 		});
 
-		// imposta il cookie
+		// cookie set
 		function setCookie() {
 			if (opts.dismiss==-1) return;
 			if (opts.dismiss>0) if ($.cookie) $.cookie(cookieName, cookieVal, {expires : opts.dismiss});
 			else if ($.cookie) $.cookie(cookieName, cookieVal);
 		}
 
-		// elimina il cookie
+		// cookie delete
 		function deleteCookie() {
 			if ($.cookie) $.cookie(cookieName, null);
 		}
 
-		// chiude il banner
-		function chiudi() {
+		// close ad
+		function closeAd() {
 			sad.slideUp(opts.speed);
 			if(typeof(opts.onHide)=="function") opts.onHide();
 		}
 
-		// apre il banner
-		function apri() {
+		// open ad
+		function openAd() {
 			sad.slideDown(opts.speed);
 			deleteCookie();
 			if(typeof(opts.onShow)=="function") opts.onShow();
