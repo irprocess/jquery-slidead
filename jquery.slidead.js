@@ -1,44 +1,3 @@
-/*
-	slideAd v0.5 beta 1
-
-	@author s.caronia (Mind S.r.l)
-	@dependencies
-		* jQuery Cookie Plugin v1.3.1
-		* https://github.com/carhartl/jquery-cookie
-
-
-	ES. UTILIZZO ------------------------------------------
-
-		// vedi defaults
-		$('#testbanner').slideAd({
-			autoClose:		10,
-			dismiss:		2,
-			autoOpen:		true,
-			openers:		'#apri',
-			onClose:		function(){
-				alert("Closed!");
-			}
-		});
-
-		------
-
-		<div id="testbanner">
-			TEST BANNER<br><br>
-			<a href="" class="slideAd-close">CLOSE</a> -
-			<a href="http://www.google.it" class="slideAd-dismiss" target="_blank">DONE</a>
-		</div>
-		<button id="apri">APRI</button>
-
-		------
-
-		$('#testbanner').slideAd('open');
-		$('#testbanner').slideAd('close');
-		$('#testbanner').slideAd('dismiss'); 	// imposta il cookie per non far riaprire l'ad e chiude
-		$('#testbanner').slideAd('reset'); 		// elimina il cookie
-
-*/
-
-
 (function($){
 	$.fn.slideAd = function(args) {
 
@@ -82,9 +41,9 @@
 		var cookieName='_sad_'+sad.attr('id');
 		var cookie=$.cookie?$.cookie(cookieName):'';
 		var cookieVal=(opts.dismiss>0?"sad.d#"+opts.dismiss:"sad.s#0");
-
+		
 		// apro il banner
-		if (((opts.dismiss!=-1&&cookie!=cookieVal)||!opts.dismiss)&&opts.autoOpen) apri();
+		if (((opts.dismiss>-1&&cookie!=cookieVal)||!opts.dismiss)&&opts.autoOpen) apri();
 
 		// chiusura automatica
 		if (opts.autoClose) setTimeout(function(){chiudi();},(opts.autoClose*1000));
@@ -92,7 +51,7 @@
 		// binding tasti close
 		if (opts.closers) $(opts.closers).on('click', function(e){
 			e.preventDefault();
-			if (opts.dismiss!=-1) setCookie();
+			if (opts.dismiss>-1) setCookie();
 			chiudi();
 		});
 
@@ -105,7 +64,7 @@
 		// binding link che considerano il banner "usato"
 		if (opts.dismissers) $(opts.dismissers).on('click', function(e){
 			e.preventDefault();
-			if (opts.dismiss!=-1) setCookie();
+			if (opts.dismiss>-1) setCookie();
 			chiudi();
 			if ($(this).attr('href')!=""){
 				window.open($(this).attr('href'), $(this).attr('target'));
@@ -136,5 +95,7 @@
 			deleteCookie();
 			if(typeof(opts.onShow)=="function") opts.onShow();
 		}
+		
+		return sad;
 	}
 })(jQuery);
