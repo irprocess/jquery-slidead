@@ -1,5 +1,5 @@
 /*
-	slideAd v0.5 beta 1
+	slideAd v0.1 (beta)
 
 	@author s.caronia (Mind S.r.l)
 	@dependencies
