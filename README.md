@@ -1,5 +1,4 @@
-jquery-slidead
-==============
+#jquery-slidead (beta)
 
 A simple plugin to show an ad sliding down, setting a cookie to dismiss the message, with auto open and auto close functions, callbacks and trigger selectors setting.
 
