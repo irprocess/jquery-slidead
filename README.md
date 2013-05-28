@@ -1,31 +1,33 @@
 jquery-slidead
 ==============
 
-// TODO: Description
+A simple plugin to show an ad sliding down, setting a cookie to dismiss the message, with auto open and auto close functions, callbacks and trigger selectors setting.
 
 ## Installation
 
 Include script *after* the jQuery library:
-
-	<script src="/path/to/jquery.cookie.js"></script>
-    <script src="/path/to/jquery-slidead.js"></script>
-
-**Do not include the script directly from GitHub (http://raw.github.com/...).** The file is being served as text/plain and as such being blocked
-in Internet Explorer on Windows 7 for instance (because of the wrong MIME type). Bottom line: GitHub is not a CDN.
+```html
+<script src="/path/to/jquery-slidead.js"></script>
+```
+If you want to use the cookie setting, you must include the Jquery Cookie plugin as well (https://github.com/carhartl/jquery-cookie) and include:
+```html
+<script src="/path/to/jquery.cookie.js"></script>
+```
+Do not include the script directly from GitHub.
 
 ##Options:
 
-* speed - animation spped (fast,slow,number)
-* autoOpen - true opens when page opens (true | false)
-* autoClose - seconds to automatic close (0 = disable);
-* dismiss - dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
-* closers - selector for elements triggering close ad operation
-* openers - selector for elements triggering open ad operation
-* dismissers - selector for elements triggering close and dismiss ad operation (es. destination campaign links)
-* onOpen - function executed after open
-* onClose - function executed after close
+* **speed** - animation spped (fast,slow,number)
+* **autoOpen** - true opens when page opens (true | false)
+* **autoClose** - seconds to automatic close (0 = disable);
+* **dismiss** - dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
+* **closers** - selector for elements triggering close ad operation
+* **openers** - selector for elements triggering open ad operation
+* **dismissers** - selector for elements triggering close and dismiss ad operation (es. destination campaign links)
+* **onOpen** - function executed after open
+* **onClose** - function executed after close
 
-##Example js:
+##Usage:
 ```javascript
 $(function(){
 	$('#testbanner').slideAd({
@@ -44,7 +46,6 @@ $(function(){
 	$('#testbanner').slideAd('reset'); // deletecookie
 });
 ```
-##Example html:
 ```html
 <div id="testbanner">
 	TEST BANNER<br><br>
