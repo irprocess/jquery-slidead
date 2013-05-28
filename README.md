@@ -1,7 +1,19 @@
 jquery-slidead
 ==============
 
-###Options:
+// TODO: Description
+
+## Installation
+
+Include script *after* the jQuery library:
+
+	<script src="/path/to/jquery.cookie.js"></script>
+    <script src="/path/to/jquery-slidead.js"></script>
+
+**Do not include the script directly from GitHub (http://raw.github.com/...).** The file is being served as text/plain and as such being blocked
+in Internet Explorer on Windows 7 for instance (because of the wrong MIME type). Bottom line: GitHub is not a CDN.
+
+##Options:
 
 * speed - animation spped (fast,slow,number)
 * autoOpen - true opens when page opens (true | false)
@@ -13,7 +25,7 @@ jquery-slidead
 * onOpen - function executed after open
 * onClose - function executed after close
 
-###Example js:
+##Example js:
 ```javascript
 $(function(){
 	$('#testbanner').slideAd({
@@ -32,7 +44,7 @@ $(function(){
 	$('#testbanner').slideAd('reset'); // deletecookie
 });
 ```
-###Example html:
+##Example html:
 ```html
 <div id="testbanner">
 	TEST BANNER<br><br>
