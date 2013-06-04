@@ -95,11 +95,11 @@
 		if (opts.dismissers) $(opts.dismissers).on('click', function(e){
 			e.preventDefault();
 			if ($(this).attr('rel')) setCookie(parseInt($(this).attr('rel')));
-			else if (opts.dismiss>-1) setCookie(opts.dismiss);
-			closeAd();
+			else if (opts.dismiss>-1) setCookie(opts.dismiss);			
 			if ($(this).attr('href')!=""){
 				window.open($(this).attr('href'), $(this).attr('target'));
 			}
+			closeAd();
 		});
 
 		// cookie set
