@@ -14,15 +14,15 @@
 
 		// settings di default
 		var defaults = {
-			speed: 				'slow',				// animation speed
-			autoOpen:			true,				// true: opens when page opens
-			autoClose:			0,					// seconds to automatic close (0 = disable);
-			dismiss:			0,					// dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
-			closers:			'.slideAd-close',	// selector for elements triggering close ad operation
-			openers:			'.slideAd-open',	// selector for elements triggering open ad operation
-			dismissers:			'.slideAd-dismiss',	// selector for elements triggering close and dismiss ad operation (es. destination campaign links)
-			onOpen:				function(){},		// function executed after open
-			onClose:			function(){}		// function executed after close
+			speed: 		'slow',				// animation speed
+			autoOpen:	true,				// true: opens when page opens
+			autoClose:	0,					// seconds to automatic close (0 = disable);
+			dismiss:	0,					// dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
+			closers:	'.slideAd-close',	// selector for elements triggering close ad operation
+			openers:	'.slideAd-open',	// selector for elements triggering open ad operation
+			dismissers:	'.slideAd-dismiss',	// selector for elements triggering close and dismiss ad operation (es. destination campaign links)
+			onOpen:		function(){},		// function executed after open
+			onClose:	function(){}		// function executed after close
 		};
 
 		// utilities
@@ -65,8 +65,7 @@
 
 		// cookie settings
 		var cookieName='_sad'+utils.encode(window.location.pathname).substring(0,10).toLowerCase()+'_'+sad.attr('id');
-		var cookie=$.cookie?$.cookie(cookieName):'';
-		//var cookieVal=(opts.dismiss>0?"sad.d#"+opts.dismiss:"sad.s#0");
+		var cookie=$.cookie ? $.cookie(cookieName) : null;
 				
 		// open the ad 
 		if (((opts.dismiss>-1&&!cookie)||opts.dismiss<0)&&opts.autoOpen) openAd();
@@ -112,7 +111,7 @@
 
 		// cookie delete
 		function deleteCookie() {
-			if ($.cookie) $.cookie(cookieName, null);
+			if ($.cookie&&$.cookie(cookieName)) $.cookie(cookieName, null);
 		}
 
 		// close ad
