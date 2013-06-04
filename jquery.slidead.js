@@ -1,5 +1,5 @@
 /*
-	slideAd v0.1 (beta)
+	slideAd v0.5 beta 1
 
 	@author s.caronia (Mind S.r.l)
 	@dependencies
@@ -7,6 +7,8 @@
 		* https://github.com/carhartl/jquery-cookie
 
 */
+
+
 (function($){
 	$.fn.slideAd = function(args) {
 
@@ -64,18 +66,23 @@
 		// cookie settings
 		var cookieName='_sad'+utils.encode(window.location.pathname).substring(0,10).toLowerCase()+'_'+sad.attr('id');
 		var cookie=$.cookie?$.cookie(cookieName):'';
-		var cookieVal=(opts.dismiss>0?"sad.d#"+opts.dismiss:"sad.s#0");
-		
+		//var cookieVal=(opts.dismiss>0?"sad.d#"+opts.dismiss:"sad.s#0");
+				
 		// open the ad 
-		if (((opts.dismiss>-1&&cookie!=cookieVal)||!opts.dismiss)&&opts.autoOpen) openAd();
-
+		if (((opts.dismiss>-1&&!cookie)||opts.dismiss<0)&&opts.autoOpen) openAd();
+		
 		// automatic close
 		if (opts.autoClose) setTimeout(function(){closeAd();},(opts.autoClose*1000));
 
+		// imposto i pointer
+		if (opts.openers) $(opts.openers).css('cursor','pointer').css('z-index','9');
+		if (opts.closers) $(opts.closers).css('cursor','pointer').css('z-index','9');
+		if (opts.dismissers) $(opts.dismissers).css('cursor','pointer').css('z-index','9');
+		
 		// binding close links
 		if (opts.closers) $(opts.closers).on('click', function(e){
 			e.preventDefault();
-			if (opts.dismiss>-1) setCookie();
+			if (opts.dismiss>-1) setCookie(opts.dismiss);
 			closeAd();
 		});
 
@@ -88,7 +95,8 @@
 		// binding dismiss links
 		if (opts.dismissers) $(opts.dismissers).on('click', function(e){
 			e.preventDefault();
-			if (opts.dismiss>-1) setCookie();
+			if ($(this).attr('rel')) setCookie(parseInt($(this).attr('rel')));
+			else if (opts.dismiss>-1) setCookie(opts.dismiss);
 			closeAd();
 			if ($(this).attr('href')!=""){
 				window.open($(this).attr('href'), $(this).attr('target'));
@@ -96,10 +104,10 @@
 		});
 
 		// cookie set
-		function setCookie() {
-			if (opts.dismiss==-1) return;
-			if (opts.dismiss>0) if ($.cookie) $.cookie(cookieName, cookieVal, {expires : opts.dismiss});
-			else if ($.cookie) $.cookie(cookieName, cookieVal);
+		function setCookie(val) {
+			if (val==-1||!$.cookie) return;
+			if (val>0) $.cookie(cookieName, 'sad.d#'+val, {expires : val});
+			else $.cookie(cookieName, 'sad.d#'+val);
 		}
 
 		// cookie delete
@@ -109,7 +117,7 @@
 
 		// close ad
 		function closeAd() {
-			sad.slideUp(opts.speed);
+			sad.fadeOut(opts.speed);
 			if(typeof(opts.onHide)=="function") opts.onHide();
 		}
 

@@ -19,7 +19,7 @@ Do not include the script directly from GitHub.
 * **speed** - animation spped (fast,slow,number)
 * **autoOpen** - true opens when page opens (true | false)
 * **autoClose** - seconds to automatic close (0 = disable);
-* **dismiss** - dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
+* **dismiss** - dissmiss cookie duration in days. Can be ovverriden by rel attribute of the link (0 = session, -1 = disable)
 * **closers** - selector for elements triggering close ad operation
 * **openers** - selector for elements triggering open ad operation
 * **dismissers** - selector for elements triggering close and dismiss ad operation (es. destination campaign links)
@@ -49,7 +49,7 @@ $(function(){
 <div id="testbanner">
 	TEST BANNER<br><br>
 	<a href="" class="slideAd-close">CLOSE</a> -
-	<a href="http://www.google.it" class="slideAd-dismiss" target="_blank">DONE</a>
+	<a href="http://www.google.it" class="slideAd-dismiss" target="_blank" rel="4">DONE</a>
 </div>
 <button id="apri">APRI</button>
 ```
