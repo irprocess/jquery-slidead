@@ -18,6 +18,7 @@
 			autoOpen:	true,				// true: opens when page opens
 			autoClose:	0,					// seconds to automatic close (0 = disable);
 			dismiss:	0,					// dissmiss cookie duration in days (0 = session, -1 = disable) - will need jQuery Cookie
+			scope:		'site',				// dismiss cookie scope ('page', 'site')
 			closers:	'.slideAd-close',	// selector for elements triggering close ad operation
 			openers:	'.slideAd-open',	// selector for elements triggering open ad operation
 			dismissers:	'.slideAd-dismiss',	// selector for elements triggering close and dismiss ad operation (es. destination campaign links)
@@ -66,7 +67,8 @@
 		// cookie settings
 		var cookieName='_sad'+utils.encode(window.location.pathname).substring(0,10).toLowerCase()+'_'+sad.attr('id');
 		var cookie=$.cookie ? $.cookie(cookieName) : null;
-				
+		var path=opts.scope=='site'?'/':'';
+		
 		// open the ad 
 		if (((opts.dismiss>-1&&!cookie)||opts.dismiss<0)&&opts.autoOpen) openAd();
 		
@@ -105,8 +107,13 @@
 		// cookie set
 		function setCookie(val) {
 			if (val==-1||!$.cookie) return;
-			if (val>0) $.cookie(cookieName, 'sad.d#'+val, {expires : val});
-			else $.cookie(cookieName, 'sad.d#'+val);
+			if (val>0) {
+				if (path) $.cookie(cookieName, 'sad.d#'+val, {expires: val, path: path});
+				else $.cookie(cookieName, 'sad.d#'+val, {expires: val});
+			} else {
+				if (path) $.cookie(cookieName, 'sad.d#'+val, {expires: val, path: path});
+				else $.cookie(cookieName, 'sad.d#'+val);
+			}
 		}
 
 		// cookie delete
